@@ -22,23 +22,23 @@ def nao_eh_feriado_brasileiro(data):
 
 df_bruto = pd.read_csv(caminho, parse_dates=['DATA_VENDA'], dayfirst=True)
 
-df_outlayers = df_bruto
+df_outlier = df_bruto
 df_res_final = df_bruto[df_bruto['DATA_VENDA'].dt.date == Dia_Escolhido().date()]
 
-df_outlayers = df_outlayers[df_outlayers['DATA_VENDA'].apply(nao_eh_feriado_brasileiro)]
-df_outlayers = df_outlayers[(df_outlayers['DATA_VENDA'] >= data_3_meses_atras) & (df_outlayers['DATA_VENDA'] <= data_ontem)]
+df_outlier = df_outlier[df_outlier['DATA_VENDA'].apply(nao_eh_feriado_brasileiro)]
+df_outlier = df_outlier[(df_outlier['DATA_VENDA'] >= data_3_meses_atras) & (df_outlier['DATA_VENDA'] <= data_ontem)]
 
-df_outlayers['Dia_semana'] = df_outlayers['DATA_VENDA'].dt.weekday
-df_outlayers = df_outlayers[df_outlayers['Dia_semana'] != 6]
-df_outlayers = df_outlayers[df_outlayers['Dia_semana'] == dia_atual]
+df_outlier['Dia_semana'] = df_outlier['DATA_VENDA'].dt.weekday
+df_outlier = df_outlier[df_outlier['Dia_semana'] != 6]
+df_outlier = df_outlier[df_outlier['Dia_semana'] == dia_atual]
 
-Q1_arrecadacao = df_outlayers['VALOR_RECEBIDO'].quantile(0.25)
-Q3_arrecadacao = df_outlayers['VALOR_RECEBIDO'].quantile(0.75)
+Q1_arrecadacao = df_outlier['VALOR_RECEBIDO'].quantile(0.25)
+Q3_arrecadacao = df_outlier['VALOR_RECEBIDO'].quantile(0.75)
 IQR_arrecadacao = Q3_arrecadacao - Q1_arrecadacao
 limite_inferior_arrecadacao = Q1_arrecadacao - 1.5 * IQR_arrecadacao
 limite_superior_arrecadacao = Q3_arrecadacao + 1.5 * IQR_arrecadacao
 
-filtro_dia = df_outlayers[(df_outlayers['VALOR_RECEBIDO'] >= limite_inferior_arrecadacao) & (df_outlayers['VALOR_RECEBIDO'] <= limite_superior_arrecadacao)]
+filtro_dia = df_outlier[(df_outlier['VALOR_RECEBIDO'] >= limite_inferior_arrecadacao) & (df_outlier['VALOR_RECEBIDO'] <= limite_superior_arrecadacao)]
 
 soma_arrecadacao_por_dia = filtro_dia.groupby(filtro_dia['DATA_VENDA'].dt.date)['VALOR_RECEBIDO'].sum()
 
