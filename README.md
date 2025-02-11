@@ -4,5 +4,5 @@ Este script realiza a análise de valores de arrecadação diária com base em d
 
 Essas funcionalidades podem ser úteis para a monitoração de performance financeira e análise de consistência de arrecadações diárias. Qualquer dúvida, sinta-se à vontade para me chamar no [linkedin](https://www.linkedin.com/in/paulo-oliveira-a6650121a/).
 
-> [!IMPORTANT]
+> [!NOTE]
 > Caso queira estar testando este script e precisar gerar uma base, você pode estar acessando meu outro repositório que gera bases ficticias para estudos, apenas clicando [aqui](https://github.com/PauloEnriqueOliveira/Geracao_Bases_Ficticias).
